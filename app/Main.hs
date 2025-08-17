@@ -3,4 +3,4 @@ module Main (main) where
 import Lib
 
 main :: IO ()
-main = Lib.hellworldFunc
+main = print (head' [1,2,3])

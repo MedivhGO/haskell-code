@@ -25,7 +25,14 @@ source-repository head
 
 library
   exposed-modules:
+      ApplyTwice
+      Avg
+      Baby
+      Boolean
+      CalcBmis
+      Calender
       Lib
+      Some
   other-modules:
       Paths_haskell_code
   autogen-modules:
