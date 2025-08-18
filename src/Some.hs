@@ -1,4 +1,16 @@
-module Some() where
+module Some(
+    head',
+    describeList,
+    describeList',
+    chain,
+    numLongChains,
+    compareWithHundred,
+    contains6,
+    contains6',
+    divideByTen,
+    capital,
+    elem',
+) where
 
 -- case1.hs
 head' :: [a] -> a
@@ -10,15 +22,15 @@ head' xs = case xs of
 describeList :: [a] -> String
 describeList xs = "The list is" ++ case xs of
     [] -> "empty."
-    [x] -> "a singleton list."
-    xs -> "a longer list."
+    [_] -> "a singleton list."
+    _  -> "a longer list."
 
 -- case3.hs
 describeList' :: [a] -> String
 describeList' xs = "This list is" ++ what xs
     where what [] = "empty."
-          what [x] = "a singleton list."
-          what xs = "a longer list."
+          what [_] = "a singleton list."
+          what _ = "a longer list."
 
 -- chain.hs
 chain :: (Integral a) => a->[a]
@@ -26,21 +38,23 @@ chain 1 = [1]
 chain n
       | even n = n : chain(n `div` 2)
       | odd n = n: chain (3 * n + 1)
+      | otherwise = error "input must postive number"
+
 numLongChains :: Int
-numLongChains = length (filter isLong(map chain [1..100]))
+numLongChains = length (filter isLong (map chain ([1..100] :: [Integer])))
                   where isLong xs = length xs > 15
 
 -- compareWithHundered.hs
 compareWithHundred :: (Num a,Ord a) => a -> Ordering
 compareWithHundred  = compare 100
 
--- contains6'.hs
-contains6' :: [Int]
-contains6' = map (\str->read str:: Int) $ filter (elem '6') (map show [1..100])
-
 -- contains6.hs
 contains6::[String]
 contains6 = filter(elem '6')(map show [1..100])
+
+-- contains6'.hs
+contains6' :: [Int]
+contains6' = map (\str->read str:: Int) $ filter (elem '6') (map show [1..100])
 
 -- divideByTen.hs
 divideByTen :: (Floating a) => a -> a
@@ -53,10 +67,10 @@ capital all@(x:xs) = "The first letter of" ++ all ++ "is" ++ [x]
 
 -- elem.hs
 elem' :: (Eq a) => a -> [a] -> Bool
-elem' a [] = False
-elem' a (x:xs)
+elem' _ [] = False
+elem' _ (x:xs)
     | a == x = True
-    |ohterwise = a `elem'` xs
+    | otherwise = a `elem'` xs
 
 -- elem2.hs
 --左折叠实现 elem 函数
@@ -74,15 +88,16 @@ factorial x = factorial (x-1) * x
 
 -- factorial.hs
 factorial' :: Integer -> Integer
-factorial' n  | n < 0 = error "i is less than 0"
+factorial' n   | n < 0 = error "i is less than 0"
                | n == 0 = 1
                | otherwise = n*factorial'(n-1)
 
--- fastFlib.hs
-fastFib = fst $ fibPair
+-- -- fastFlib.hs
+-- fastFib = fst $ fibPair
+--     where fibPair =
 
 -- fibonacci.hs
-fibonacci :: (Num a) => a -> a
+fibonacci :: Integer -> Integer
 fibonacci 0 = 0
 fibonacci 1 = 1
 fibonacci n = fibonacci (n-1) + fibonacci (n-2)
@@ -167,13 +182,6 @@ a `myCompare` b
     | a == b = EQ
     | otherwise = LT
 
--- mygcd.hs
-mygcd :: Int -> Int ->Int
-mygcd x y = if y == 0 then x else mygcd y (mod x y)
-
--- mylen.hs
-length' xs = sum [1|_ <-xs]
-
 -- numLongChains'.hs
 numLongChains'::Int
 numLongChains' = length(filter (\xs -> length xs > 15)(map chain[1..100]))
@@ -183,29 +191,6 @@ charName :: Char -> String
 charName 'a' = "Albert"
 charName 'b' = "Broseph"
 charName 'c' = "Cecil"
-
--- power.hs
-power :: Int -> Int -> Int
-power _ 0 = 1
-power x n = x * power x (n-1)
-
--- power1.hs
-power1 :: Int -> Int -> Int
-power1 _ 0 =1
-power1 x n | odd n = let p = power x ((n-1) `div` 2) in x * p * p
-           | otherwise = let p = power x (n `div` 2) in p * p
-
--- quicksort.hs
-quicksort :: (Ord a) => [a] -> [a]
-quicksort [] = []
-quicksort (x:xs) =
-  let smallerSorted = quicksort [a|a <- xs,a <= x]
-      biggerSorted = quicksort [a|a<-xs,a > x]
-  in smallerSorted ++ [x] ++ biggerSorted
-
--- reNoUpper.hs
-removeNonUppercase :: [Char] -> [Char]
-removeNonUppercase st = [c|c <- st,c `elem` ['A'..'Z']]
 
 -- repeat.hs
 repeat' :: a-> [a]
@@ -222,21 +207,25 @@ reverse' :: [a] -> [a]
 reverse' [] = []
 reverse' (x:xs) = reverse' xs ++ [x]
 
--- reverseSentence
-reverseSentence::String->String
---reverseSentence str = unwords (reverse (words str))--
---reverseSentence str = unwords $ reverse $ words str--
-reverseSentence = unwords $ reverse $ words
+-- -- reverseSentence
+-- reverseSentence::String->String
+-- --reverseSentence str = unwords (reverse (words str))--
+-- --reverseSentence str = unwords $ reverse $ words str--
+-- reverseSentence = unwords $ reverse $ words
 
 -- romeNatation.hs
 romeNotation :: [String]
 romeNotation =  ["M","CM","D","CD","C","XC","L","XL","X","IX","V","IV","I"]
+
 romeAmount :: [Int]
 romeAmount = [1000,900, 500, 400, 100, 90, 50, 40, 10, 9, 5, 4, 1]
+
 pair:: [(Int,String)]
 pair = zip romeAmount romeNotation
+
 subtrahend :: Int -> (Int,String)
 subtrahend n = head (dropWhile(\(a,_)->a >n)pair)
+
 convert :: Int -> (Int,String)
 convert 0 = (0,"")
 convert n = let (i,st) = subtrahend n in
@@ -271,10 +260,6 @@ bmiTell bmi
 initials :: String -> String -> String
 initials a b = (show a) ++ (show b)
 
--- selflen.hs
-length'' xs = sum[1 |_ <- xs]
-removeNonUppercase' st = [c|c<-st,c `elem` ['A'..'Z']]
-
 -- selfeng.hs
 length''' :: (Num b) => [a] -> b
 length''' [] = 0
@@ -286,8 +271,8 @@ sum' [] = 0
 sum' (x:xs) = x + sum' xs
 
 -- selftanhao.hs
-tanhao ::(Int a) => [a]->a->b
-tanhao [xs] a = take a+1 [xs]
+tanhao :: (Integral a) => [a] -> a -> [a]
+tanhao xs n = take (fromIntegral n) xs
 
 -- selfwhere.hs
 bmiTell1 :: (RealFloat a) => a->a->String
@@ -306,20 +291,23 @@ calBmis :: (RealFloat a) => [(a,a)] -> [a]
 calBmis xs = [bmi w h|(w,h)<-xs]
     where bmi weight height = weight / height ^ 2
 
--- sieve.hs
-{-shaixuanfa-}
-sieve :: (Integral a) => [a] -> [a]
-sieve (p:xs) = p:sieve[x|x<-xs,x `mod` p /= 0]
-primes = sieve [2..]
+-- -- sieve.hs
+-- {-shaixuanfa-}
+-- sieve :: (Integral a) => [a] -> [a]
+-- sieve (p:xs) = p:sieve[x|x<-xs,x `mod` p /= 0]
+-- primes = sieve [2..]
 
 -- sum2.hs
-sum2:: (Num a) => [a] -> a
+sum2 :: (Num a) => [a] -> a
 sum2 xs = foldl(\acc x -> acc + x) 0 xs
 
--- tailre.hs
-total' [] n = n
-total' (x:xs) n = total' xs (n+x)
-total' xs = total' xs 0
+-- -- tailre.hs
+-- total' :: Num a => [a] -> a -> a
+-- total' [] n = n
+-- total' (x:xs) n = total' xs (n+x)
+
+-- total :: Num a => [a] -> a
+-- total xs = total' xs 0
 
 -- take.hs
 take' :: (Num i,Ord i) => i -> [a] -> [a]

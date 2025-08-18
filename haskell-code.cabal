@@ -25,13 +25,16 @@ source-repository head
 
 library
   exposed-modules:
+      Algo
       ApplyTwice
       Avg
       Baby
       Boolean
       CalcBmis
       Calender
+      Chapter2
       Lib
+      My
       Some
   other-modules:
       Paths_haskell_code
