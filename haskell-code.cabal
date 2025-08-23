@@ -25,16 +25,20 @@ source-repository head
 
 library
   exposed-modules:
-      Algo
-      ApplyTwice
-      Avg
-      Baby
-      Boolean
-      CalcBmis
-      Calender
+      Chapter10
+      Chapter11
+      Chapter12
+      Chapter13
+      Chapter14
       Chapter2
+      Chapter3
+      Chapter4
+      Chapter5
+      Chapter6
+      Chapter7
+      Chapter8
+      Chapter9
       Lib
-      My
       Some
   other-modules:
       Paths_haskell_code
@@ -45,6 +49,7 @@ library
   ghc-options: -Wall -Wcompat -Widentities -Wincomplete-record-updates -Wincomplete-uni-patterns -Wmissing-export-lists -Wmissing-home-modules -Wpartial-fields -Wredundant-constraints
   build-depends:
       base >=4.7 && <5
+    , hlint >=3.5
   default-language: Haskell2010
 
 executable haskell-code-exe
@@ -59,6 +64,7 @@ executable haskell-code-exe
   build-depends:
       base >=4.7 && <5
     , haskell-code
+    , hlint >=3.5
   default-language: Haskell2010
 
 test-suite haskell-code-test
@@ -74,4 +80,5 @@ test-suite haskell-code-test
   build-depends:
       base >=4.7 && <5
     , haskell-code
+    , hlint >=3.5
   default-language: Haskell2010
