@@ -11,6 +11,8 @@ curl -sSL https://get.haskellstack.org/ | sh
 stack build
 # format code
 stack exec -- ormolu --mode inplace src/Chapter5.hs
+# lint code
+stack exec -- hlint src/
 # exec main
 stack exec haskell-code-exe
 ```
