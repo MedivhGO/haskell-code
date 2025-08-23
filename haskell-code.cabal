@@ -39,7 +39,6 @@ library
       Chapter8
       Chapter9
       Lib
-      Some
   other-modules:
       Paths_haskell_code
   autogen-modules:

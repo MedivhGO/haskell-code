@@ -3,6 +3,10 @@
 《Learn You a Haskell for Great Good!》
 
 ```sh
+# cabal 是用于管理 Haskell 依赖库的程序
+sudo apt-get install cabal
+# 安装 stack
+curl -sSL https://get.haskellstack.org/ | sh
 # build project
 stack build
 # format code
